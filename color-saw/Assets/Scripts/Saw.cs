@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 public class Saw : MonoBehaviour
 {
-    private void Update()
-    {
-        transform.Rotate(new Vector3(0f, 100f, 0f) * Time.deltaTime);
-    }
+	public Vector3 rotation;
+	public Transform model;
+
+	private void Update()
+	{
+		model.Rotate(rotation, rotation.magnitude * Time.deltaTime);
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		var block = other.GetComponent<Block>();
+        if (block)
+            block.DestroyBlock();
+	}
 }
