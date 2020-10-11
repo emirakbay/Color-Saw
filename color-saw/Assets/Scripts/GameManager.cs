@@ -11,13 +11,19 @@ public class GameManager : MonoBehaviour
     {
         public GameObject stage;
     }
+
+	public Level[] levels;
+
 	public bool advancing;
 	public bool gameOver;
+
 	public Text levelText;
+
 	public GameObject gameOverUI;
-	public Level[] levels;
-	public int curLevelNr;
+
     private GameObject curLevel;
+	
+	public int curLevelNumber;
 
     #endregion
 
@@ -29,7 +35,7 @@ public class GameManager : MonoBehaviour
     #region Main Methods
 	private void Awake()
 	{
-		if (Instance !=null && Instance !=this)
+		if (Instance != null && Instance != this)
 			Destroy(this.gameObject);
 
 		Instance = this;
@@ -40,10 +46,6 @@ public class GameManager : MonoBehaviour
 		NextLevel();
 	}
 
-	private void Update()
-	{
-
-	}
     #endregion
 
     #region Helper Methods
@@ -59,13 +61,13 @@ public class GameManager : MonoBehaviour
 
 		advancing = true;
 
-		if (curLevelNr < levels.Length)
+		if (curLevelNumber < levels.Length)
 			NextLevel();
 	}
 
 	public void NextLevel()
 	{
-		curLevelNr++;
+		curLevelNumber++;
 		
 		NextStage();
 		RefreshUI();
@@ -81,14 +83,7 @@ public class GameManager : MonoBehaviour
 
 	public void RefreshUI()
 	{
-		levelText.text = "LEVEL " + curLevelNr.ToString();
-	}
-
-	private IEnumerator SpawnNextStage()
-	{
-		yield return new WaitForSeconds(1f);
-		curLevel = Instantiate(levels[curLevelNr-1].stage);
-		advancing = false;
+		levelText.text = "LEVEL " + curLevelNumber.ToString();
 	}
 
 	public void GameOver()
@@ -96,6 +91,14 @@ public class GameManager : MonoBehaviour
 		gameOver = true;
 		gameOverUI.SetActive(true);
 	}
+
+	private IEnumerator SpawnNextStage()
+	{
+		yield return new WaitForSeconds(1f);
+		curLevel = Instantiate(levels[curLevelNumber-1].stage);
+		advancing = false;
+	}
+
     #endregion
 }
 

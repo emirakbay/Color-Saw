@@ -4,7 +4,9 @@ public class Block : MonoBehaviour
 {
 	public bool playerBase;
 	public bool neighbor;
+	
 	private Vector3 blockPosition;
+
 	private void Awake()
 	{
 		blockPosition = transform.localPosition;
@@ -39,10 +41,10 @@ public class Block : MonoBehaviour
 	{
 		neighbor = true;
 
-		var rightBlock = Player.Instance.BlockByKey(blockPosition + new Vector3(1, 0, 0));
-		var leftBlock = Player.Instance.BlockByKey(blockPosition + new Vector3(-1, 0, 0));
-		var topBlock = Player.Instance.BlockByKey(blockPosition + new Vector3(0, 0, 1));
-		var bottomBlock = Player.Instance.BlockByKey(blockPosition + new Vector3(0, 0, -1));
+		var rightBlock = Player.Instance.GetBlockByKey(blockPosition + new Vector3(1, 0, 0));
+		var leftBlock = Player.Instance.GetBlockByKey(blockPosition + new Vector3(-1, 0, 0));
+		var topBlock = Player.Instance.GetBlockByKey(blockPosition + new Vector3(0, 0, 1));
+		var bottomBlock = Player.Instance.GetBlockByKey(blockPosition + new Vector3(0, 0, -1));
 
 		if (rightBlock && !rightBlock.neighbor)
 			rightBlock.CheckNeighbor();

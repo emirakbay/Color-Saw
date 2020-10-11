@@ -1,29 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public Color color;
+
 	public int playerBaseBlockCount;
+
 	public Dictionary<Vector3, Block> blocks = new Dictionary<Vector3, Block>();
+
     public static Player Instance;
+
     private void Awake()
 	{
-		if (Instance !=null && Instance !=this)
+		if (Instance != null && Instance != this)
 			Destroy(this.gameObject);
 
 		Instance = this;
 	}
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        PlayerBase();
+        HandlePlayerBase();
         RefreshBlocks();
     }
 
-	public void PlayerBase()
+	public void HandlePlayerBase()
 	{
 		for (int i = 0; i < transform.childCount; i++)
 		{
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
 		}
 	
 		List<Block> notNeighborBlocks = new List<Block>();
+
 		foreach (var block in blocks.Values)
 		{
 			if (!block.neighbor)
@@ -69,7 +73,7 @@ public class Player : MonoBehaviour
 			GameManager.Instance.Advance();
 	}
 
-	public Block BlockByKey(Vector3 key)
+	public Block GetBlockByKey(Vector3 key)
 	{
 		return blocks.ContainsKey(key) ? blocks[key] : null;
 	}
